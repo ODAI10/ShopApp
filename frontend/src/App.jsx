@@ -6,7 +6,7 @@ import Login from './Auth/Login';
 import Register from './Auth/Register';
 import MainNav from './components/MainNav';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Products from './products/products'
+import Products from './components/products/products'
 import Cart from './components/cart/Cart'
 
 function App() {

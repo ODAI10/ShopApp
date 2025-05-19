@@ -1,0 +1,155 @@
+/* Main Navbar */
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1f2937;
+  color: white;
+  padding: 10px 50px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Logo and Store Name */
+.main-nav > a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.store-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+  margin: auto !important;
+}
+
+.nav-links li a {
+  position: relative;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 5px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+/* Underline animation */
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #38bdf8;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.nav-links li a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* User Info */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.loginUserInfowithLogout{
+    display: flex;
+    gap: 2rem;
+}
+
+.loginUserInfo{
+  display: flex;
+  gap: .5rem;
+  margin: auto;
+  cursor: pointer;
+}
+
+.cart-icon {
+  transition: transform 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.cart-icon:hover {
+  transform: scale(1.2) !important;
+  color: whitesmoke !important; 
+
+}
+.user-icon {
+  font-size: 22px;
+  color: white;
+}
+
+.cart-link {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #f44336 0%, #e53935 100%); /* تدرج لوني أحمر */
+  color: white;
+  border: none;
+  padding: 5px 20px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #e53935 0%, #f44336 100%); /* تغيير التدرج عند التمرير */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+.auth-btn {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white;
+  border: none;
+  padding: 5px 20px;
+    font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.auth-btn:hover {
+  background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+
+.helloUser{
+  margin-right: 15px;
+}

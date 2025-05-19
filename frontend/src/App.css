@@ -1,0 +1,140 @@
+/* ملف: ProductCard.css */
+
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  align-items: stretch; /* ← لحل مشكلة عدم تساوي الارتفاع */
+}
+
+/* بطاقة المنتج */
+.product-card {
+  background-color: white;
+  border-radius: 16px;
+  overflow: hidden;
+  width: 23%;
+  min-width: 220px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  height: 100%; /* ← مهم لتوحيد الطول */
+}
+
+/* التأثير عند التحويم */
+.product-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+/* صورة المنتج */
+.product-image-wrapper {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px; /* ← padding لإظهار الصورة كاملة */
+  box-sizing: border-box;
+  background-color: #f8f8f8;
+}
+
+.product-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* ← يظهر الصورة كاملة بدون تقطيع */
+}
+
+/* محتوى البطاقة */
+.product-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1; /* ← لتمديد المحتوى لملء البطاقة */
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.product-description {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.product-price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #28a745;
+}
+
+.product-brand,
+.product-quantity {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* الأزرار */
+.buttonsCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.show-more-btn,
+.buy-btn,
+.remove-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.show-more-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.buy-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.remove-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.show-more-btn:hover {
+  background-color: #0056b3;
+}
+
+.buy-btn:hover {
+  background-color: #218838;
+}
+
+.remove-btn:hover {
+  background-color: #c82333;
+}
+
+/* استجابة للشاشات الصغيرة */
+@media (max-width: 992px) {
+  .product-card {
+    width: 48%;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-card {
+    width: 100%;
+  }
+}

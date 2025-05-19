@@ -1,0 +1,42 @@
+.login-container {
+  height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-color: #1f2937 !important;
+  color: #1f2937 !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-box label,
+.login-box h2,
+.login-box p {
+  color: #1f2937 !important;
+}
+
+
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #1f2937 !important;
+}
+
+.btn-login {
+  background-color: #1f2937 !important;
+  color: white !important;
+}
+
+.btn-login:hover {
+  background-color: #111827 !important;
+}
+
+.register-link {
+  color: #1f2937;
+  text-decoration: underline;
+}
+
+

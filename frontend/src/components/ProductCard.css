@@ -1,0 +1,83 @@
+
+.product-image-wrapper {
+  width: 100%;
+  height: 150px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background-color: transparent;
+}
+
+.product-content {
+  padding: 12px;
+  background-color: white;
+  flex-grow: 1;
+  color: #1f2937;
+}
+
+.product-name {
+  font-size: 1.1em;
+  margin-bottom: 6px;
+  color: #1e293b;
+}
+
+.product-description {
+  font-size: 0.9em;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.product-price {
+  font-size: 1em;
+  font-weight: bold;
+  color: #34d399;
+  margin-bottom: 4px;
+}
+
+.product-brand {
+  font-size: 0.85em;
+  color: #1e293b;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+
+
+/*buttons*/
+
+.buttonsCard{
+  margin-top: 15px !important;
+
+}
+.show-more-btn, .buy-btn {
+  background-color: #facc15;
+  color: #1e293b;
+  border: none;
+  padding: 5px 10px; /* تصغير الأزرار قليلاً */
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 8px; /* فصل الأزرار عن بعضهما */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  font-size: 13px;
+}
+
+.show-more-btn:hover, .buy-btn:hover {
+  background-color: #fde047;
+}
+
+.show-more-btn svg, .buy-btn svg {
+  margin-right: 8px; /* إضافة مسافة بين الأيقونة والنص */
+}

@@ -1,0 +1,95 @@
+/* src/styles/home.css */
+.home-container {
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+
+}
+
+
+
+/* Banner */
+.banner {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.banner-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+} 
+
+/* تحسينات إضافية */
+.navbar {
+  background-color: #1e293b; /* جعل الشريط العلوي متجانس مع الخلفية */
+}
+
+.search-box input:focus {
+  outline: none;
+  border: 2px solid #0284c7;
+}
+
+.slick-dots {
+  bottom: 15px;
+}
+
+.slick-dots li button:before {
+  font-size: 10px;
+  color: #ffffff;
+  opacity: 0.6;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #ff6600;
+  opacity: 1;
+}
+
+
+
+
+
+
+
+
+/* Navbar Links Styling */
+.navbar-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-link {
+  position: relative;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 5px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover Effects */
+.nav-link:hover {
+  color: #38bdf8;
+  transform: translateY(-2px);
+}
+
+/* Underline Animation */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #38bdf8;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}

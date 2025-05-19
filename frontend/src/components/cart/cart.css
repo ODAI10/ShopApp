@@ -1,0 +1,21 @@
+
+.total-price {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+
+
+.payment-box {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+}
+
+.payment-icon {
+  width: 50px;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+

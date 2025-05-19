@@ -1,0 +1,20 @@
+.title-section {
+  background-color: #1f2937; /* اللون الرئيسي للموقع */
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: .5rem;
+}
+
+.title-text {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+}

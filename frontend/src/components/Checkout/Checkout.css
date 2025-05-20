@@ -1,0 +1,46 @@
+.checkout-page {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  width: 80% !important;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.simple-box {
+  background-color: #ffffff;
+  border: 1px solid #bac1ca;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+/* زر أبيض وعند التحويم يصبح داكن تدريجيًا */
+.confirm-btn-simple {
+  background-color: #ffffff;
+  color: #1f2937;
+  border: 2px solid #1f2937;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: background-color 1.2s ease, color 1.2s ease;
+}
+
+.confirm-btn-simple:hover {
+  background-color: #1f2937;
+  color: #ffffff;
+}
+
+.form-check-input {
+  cursor: pointer;
+}
+
+.form-check-label {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+
+.form-check img {
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  padding: 4px;
+}

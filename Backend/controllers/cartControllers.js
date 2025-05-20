@@ -53,7 +53,26 @@ const getCartItems = async (req,res)=>{
 }
 
 
+// Remove a product from the cart
+const deleteItem = async (req,res)=>{
+  try {
+    const userId = req.user.userId
+    const cartItemId  = req.params.id
+
+    const item = await CartItem.findByIdAndDelete({_id:cartItemId,user:userId})
+
+    if(!item){
+            return res.status(404).json({ message: 'Cart item not found or does not belong to user' });
+    }
+    res.status(200).json({ message: 'Item removed from cart', deletedItem: item });
+
+  } catch (error) {
+     console.error('Error deleting item from cart:', error);
+     res.status(500).json({ message: 'Server error', error: error.message });
+  }
+}
 
 
 
-module.exports = {addToCart ,getCartItems }
+
+module.exports = {addToCart ,getCartItems ,deleteItem}

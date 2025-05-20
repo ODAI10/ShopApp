@@ -8,7 +8,7 @@ import MainNav from './components/MainNav';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Products from './components/products/products'
 import Cart from './components/cart/Cart'
-
+import Checkout from './components/Checkout/Checkout'
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -28,6 +28,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path='/products' element={<Products/>} />
         <Route path='/Cart' element={<Cart/>} />
+        <Route path='/Checkout' element={<Checkout/>} />
       </Routes>
     </>
   );

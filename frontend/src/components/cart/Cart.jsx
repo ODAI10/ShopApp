@@ -3,11 +3,15 @@ import axios from 'axios';
 import './cart.css';
 import ProductCard from '../ProductCard';
 import '../../app.css'
-import paypal from "../../assets/Paypal.png"
+import paypal from "../../assets/paypal.png"
 import visa from "../../assets/visa.png"
+import TitleSection from '../TitleSection'
+import { useNavigate } from 'react-router-dom';
+
 
 const Cart = ({ onRemove, onCheckout }) => {
   const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -33,9 +37,28 @@ const Cart = ({ onRemove, onCheckout }) => {
     return acc + item.product.price * item.quantity;
   }, 0);
 
+  const handleRemoveFromCart = async (cartItemId) => {
+  try {
+    await axios.delete(`http://localhost:5000/api/cart/${cartItemId}`, {
+      withCredentials: true,
+    });
+
+    // تحديث الحالة لإزالة العنصر من الواجهة
+    setCartItems((prevItems) => prevItems.filter(item => item._id !== cartItemId));
+  } catch (error) {
+    console.error('Error removing item from cart:', error.response?.data || error.message);
+  }
+};
+
+
   return (
-    <div className="py-4 container">
-      <h2 className="cart-title mb-4">Shopping Cart</h2>
+
+    <>
+           <TitleSection title={'Shopping Cart'} />
+
+        <div className="py-4 container ">
+      
+
       {cartItems.length === 0 ? (
         <p className="empty-cart">Your cart is empty.</p>
       ) : (
@@ -51,12 +74,11 @@ const Cart = ({ onRemove, onCheckout }) => {
                 showMore={false}
                 showAddToCart={false}
                 showRemoveButton={true}
-                onRemove={() => onRemove(item._id)}
-              />
+                onRemove={() => handleRemoveFromCart(item._id)}               />
             ))}
           </div>
 
-         <div className="checkout-section payment-box mt-5 p-4 rounded shadow-sm">
+         {/* <div className="checkout-section payment-box mt-5 p-4 rounded shadow-sm">
   <div className="d-flex justify-content-between align-items-center mb-3">
     <h5 className="mb-0">Total Amount:</h5>
     <h4 className="text-success">${totalPrice.toFixed(2)}</h4>
@@ -68,11 +90,25 @@ const Cart = ({ onRemove, onCheckout }) => {
   <button className="btn btn-success w-100 py-2 fs-5" onClick={onCheckout}>
     🛒 Complete Payment
   </button>
-</div>
+</div> */}
+
+
+<button
+  className="btn btn-primary w-100 py-2 fs-5 mt-4"
+  onClick={() => {
+    // هنا تنتقل لصفحة الدفع
+    // لو تستخدم React Router:
+    navigate('/checkout');
+  }}
+>
+  Proceed to Checkout
+</button>
 
         </>
       )}
     </div>
+    </>
+    
   );
 };
 

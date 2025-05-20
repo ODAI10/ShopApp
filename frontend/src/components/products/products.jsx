@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import TitleSection from '../components/TitleSection';
-import ProductCard from '../components/ProductCard';
+import TitleSection from '../TitleSection';
+import ProductCard from '../ProductCard';
 import './products.css';
-import CategoriesBar from '../components/CategoriesBar/CategoriesBar';
-import '../App.css'
+import CategoriesBar from '../CategoriesBar/CategoriesBar';
+import '../../App.css'
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -55,7 +55,7 @@ const Products = () => {
       <div className="products-container   container">
         {filteredProducts.map(product => (
           <ProductCard
-
+            key={product._id}
             product={product}
             showDescription={true}
             showMore={true}

@@ -3,8 +3,7 @@ import axios from 'axios';
 import './cart.css';
 import ProductCard from '../ProductCard';
 import '../../app.css'
-import paypal from "../../assets/paypal.png"
-import visa from "../../assets/visa.png"
+
 import TitleSection from '../TitleSection'
 import { useNavigate } from 'react-router-dom';
 
@@ -32,8 +31,7 @@ const Cart = ({ onRemove, onCheckout }) => {
     fetchCartItems();
   }, []);
 
-  // ✅ حساب مجموع السعر
-  const totalPrice = cartItems.reduce((acc, item) => {
+   const totalPrice = cartItems.reduce((acc, item) => {
     return acc + item.product.price * item.quantity;
   }, 0);
 
@@ -43,10 +41,25 @@ const Cart = ({ onRemove, onCheckout }) => {
       withCredentials: true,
     });
 
-    // تحديث الحالة لإزالة العنصر من الواجهة
-    setCartItems((prevItems) => prevItems.filter(item => item._id !== cartItemId));
+     setCartItems((prevItems) => prevItems.filter(item => item._id !== cartItemId));
   } catch (error) {
     console.error('Error removing item from cart:', error.response?.data || error.message);
+  }
+};
+
+
+const handleProceedToCheckout = async () => {
+  try {
+    const response = await axios.post('http://localhost:5000/api/order', {}, {
+      withCredentials: true,
+    });
+
+    console.log('✅ Order created:', response.data);
+
+     navigate('/checkout');
+  } catch (error) {
+    console.error('❌ Failed to create order:', error.response?.data || error.message);
+    alert('Something went wrong while creating your order.');
   }
 };
 
@@ -60,7 +73,7 @@ const Cart = ({ onRemove, onCheckout }) => {
       
 
       {cartItems.length === 0 ? (
-        <p className="empty-cart">Your cart is empty.</p>
+        <p className="empty-cart ">Your cart is empty.</p>
       ) : (
         <>
           <div className="products-container">
@@ -95,14 +108,11 @@ const Cart = ({ onRemove, onCheckout }) => {
 
 <button
   className="btn btn-primary w-100 py-2 fs-5 mt-4"
-  onClick={() => {
-    // هنا تنتقل لصفحة الدفع
-    // لو تستخدم React Router:
-    navigate('/checkout');
-  }}
+  onClick={handleProceedToCheckout}
 >
   Proceed to Checkout
 </button>
+
 
         </>
       )}

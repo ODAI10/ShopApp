@@ -9,19 +9,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Products from './components/products/products'
 import Cart from './components/cart/Cart'
 import Checkout from './components/Checkout/Checkout'
+import axios from 'axios';
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // التحقق من وجود التوكن في الكوكيز عند تحميل الصفحة
-  useEffect(() => {
-    if (Cookies.get("token")) {
-      setIsLoggedIn(true);
-    }
+    useEffect(() => {
+    axios.get("http://localhost:5000/api/auth/me", { withCredentials: true })
+      .then(res => {
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        setIsLoggedIn(false);
+      });
   }, []);
 
   return (
     <>
-      <MainNav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+    <MainNav isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />

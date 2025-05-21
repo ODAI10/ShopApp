@@ -8,8 +8,8 @@ import '../../App.css'
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);  // حالة الفئة المحددة
-  const [activeCategory, setActiveCategory] = useState(null);  // حالة الفئة النشطة
+  const [selectedCategory, setSelectedCategory] = useState(null);  
+  const [activeCategory, setActiveCategory] = useState(null);  
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -34,14 +34,13 @@ const Products = () => {
     fetchCategories();
   }, []);
 
-  // فلترة المنتجات بناءً على الفئة المحددة
-  const filteredProducts = selectedCategory
+   const filteredProducts = selectedCategory
     ? products.filter(product => product.category._id === selectedCategory._id)
     : products;
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
-    setActiveCategory(category);  // تعيين الفئة النشطة
+    setActiveCategory(category);  
   };
 
   return (

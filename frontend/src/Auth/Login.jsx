@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 
@@ -18,18 +17,13 @@ const Login = ({ setIsLoggedIn }) => {
       await axios.post("http://localhost:5000/api/auth/login", {
         email,
         password,
-      },  { withCredentials: true });
+      }, { withCredentials: true });
 
-    
-      // تحديث الحالة لتسجيل الدخول
-      setIsLoggedIn(true); // تحديث حالة المستخدم في App.js
-
-      navigate("/"); // توجيه بعد الدخول
+      setIsLoggedIn(true); // تحديث حالة الدخول
+      navigate("/");
     } catch (err) {
       setError(
-        err.response && err.response.data.message
-          ? err.response.data.message
-          : "Login failed. Please try again."
+        err.response?.data?.message || "Login failed. Please try again."
       );
     }
   };

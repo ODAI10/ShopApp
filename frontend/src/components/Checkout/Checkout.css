@@ -1,46 +1,151 @@
+/* صفحة الطلب */
 .checkout-page {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  width: 80% !important;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  max-width: 80%;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  padding: 30px 25px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
-.simple-box {
-  background-color: #ffffff;
-  border: 1px solid #bac1ca;
-  padding: 16px;
+.page-title {
+  text-align: center;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+.section-box {
+  background-color: #f7f9fc;
+  padding: 20px 25px;
   border-radius: 12px;
+  box-shadow: inset 0 0 10px #e1e7ee;
+  margin-bottom: 30px;
 }
 
-/* زر أبيض وعند التحويم يصبح داكن تدريجيًا */
-.confirm-btn-simple {
-  background-color: #ffffff;
-  color: #1f2937;
-  border: 2px solid #1f2937;
-  border-radius: 10px;
+.section-box h3 {
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #34495e;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 6px;
+}
+
+/* صفوف معلومات الشحن */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
   font-size: 1rem;
-  transition: background-color 1.2s ease, color 1.2s ease;
+  border-bottom: 1px solid #dde5eb;
 }
 
-.confirm-btn-simple:hover {
-  background-color: #1f2937;
-  color: #ffffff;
+.info-row span {
+  font-weight: 600;
+  color: #2c3e50;
 }
 
-.form-check-input {
+/* جدول طلبات المستخدم */
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  color: #2c3e50;
+}
+
+.items-table thead th {
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+  text-align: left;
+}
+
+.items-table tbody tr:hover {
+  background-color: #d0e6fb;
+}
+
+.items-table tbody td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #dde5eb;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 12px;
+  color: #2c3e50;
+}
+
+/* قسم الدفع */
+.payment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1.8px solid #3498db;
+  border-radius: 10px;
+  padding: 10px 20px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.form-check-label {
-  margin-left: 8px;
+.payment-option input[type="radio"] {
   cursor: pointer;
+  accent-color: #3498db;
 }
 
-
-.form-check img {
+.payment-option img {
+  width: 32px;
+  height: auto;
   border-radius: 6px;
-  background-color: #f9f9f9;
-  padding: 4px;
+  background-color: #f7f9fc;
+  padding: 3px;
+  user-select: none;
+}
+
+
+
+.payment-option:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+
+/* زر التأكيد */
+.confirm-btn {
+  background-color: #3498db;
+  color: white;
+  font-size: 1.1rem;
+  padding: 12px 45px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 5px 15px rgba(52,152,219,0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+}
+
+.confirm-btn:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+.loading-text, .error-text {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #555;
 }

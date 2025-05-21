@@ -19,6 +19,7 @@ const productRoutes  = require("./routes/productRoutes");
 const userRoutes = require('./routes/userRoutes')
 const authRoutes = require('./routes/authRoutes')
 const cartRoutes = require('./routes/cartRoutes');
+const orderRoutes = require("./routes/ordersRoutes")
 
 app.use("/api/categories", categoryRoutes);
 app.use('/api/products', productRoutes);
@@ -26,6 +27,7 @@ app.use('/ImgProducts', express.static(path.join(__dirname, 'public/ImgProducts'
 app.use('/api/users',userRoutes);
 app.use('/api/auth',authRoutes)
 app.use("/api/cart",cartRoutes)
+app.use("/api/order",orderRoutes);
 // Connect DB
 const connectDB = require('./config/db');
 connectDB(); 

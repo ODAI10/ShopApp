@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const { orderItemSchema } = require('./OrderItem');
+const { orderItemSchema } = require('./order_items');
 
 const orderSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
@@ -8,7 +8,7 @@ const orderSchema = new Schema({
   orderDate: { type: Date, default: Date.now },
   status: {
     type: String,
-    enum: ['new','processing','shipped','completed','canceled'],
+  enum: ['new', 'processing', 'shipped', 'completed', 'canceled', 'confirmed'],
     default: 'new'
   },
   totalAmount: { type: Number, required: true },

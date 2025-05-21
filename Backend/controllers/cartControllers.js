@@ -42,37 +42,46 @@ const addToCart = async (req, res) => {
 };
 
 // Show all items on the cart
-const getCartItems = async (req,res)=>{
+const getCartItems = async (req, res) => {
   try {
-    const userId = req.user.userId
-    const itemsCart = await CartItem.find({user:userId}).populate('product')
-    res.json(itemsCart)
+    const userId = req.user.userId;
+    const itemsCart = await CartItem.find({ user: userId }).populate('product');
+    res.json(itemsCart);
   } catch (error) {
-        res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
-}
+};
 
-
-// Remove a product from the cart
-const deleteItem = async (req,res)=>{
+//  Remove one item from cart
+const removeCartItem = async (req, res) => {
   try {
-    const userId = req.user.userId
-    const cartItemId  = req.params.id
+    const userId = req.user.userId;
+    const cartItemId = req.params.id;
 
-    const item = await CartItem.findByIdAndDelete({_id:cartItemId,user:userId})
+    const item = await CartItem.findOneAndDelete({ _id: cartItemId, user: userId });
 
-    if(!item){
-            return res.status(404).json({ message: 'Cart item not found or does not belong to user' });
+    if (!item) {
+      return res.status(404).json({ message: 'Cart item not found or does not belong to user' });
     }
+
     res.status(200).json({ message: 'Item removed from cart', deletedItem: item });
-
   } catch (error) {
-     console.error('Error deleting item from cart:', error);
-     res.status(500).json({ message: 'Server error', error: error.message });
+    console.error('Error deleting item from cart:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
-}
+};
+
+//  Clear all cart items (used when creating an order)
+const clearCart = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    await CartItem.deleteMany({ user: userId });
+    res.status(200).json({ message: 'Cart cleared successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to clear cart', error: error.message });
+  }
+};
 
 
 
-
-module.exports = {addToCart ,getCartItems ,deleteItem}
+module.exports = {addToCart ,getCartItems ,removeCartItem,clearCart}

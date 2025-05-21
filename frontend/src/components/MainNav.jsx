@@ -6,24 +6,23 @@ import axios from "axios";
 import './MainNav.css';
 import logo from '../assets/logo4.png';
 
-const MainNav = () => {
+const MainNav = ({ isLoggedIn, setIsLoggedIn }) => {
   const [username, setUsername] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/auth/me", { withCredentials: true })
-      .then(res => {
-        const name = res.data.user.name || 'User';
-        console.log(res.data.user.name)
-        setUsername(name.split(' ')[0]);
-        setIsLoggedIn(true);
-      })
-      .catch(() => {
-        setIsLoggedIn(false);
-        setUsername('');
-      });
-  }, []);
+    if (isLoggedIn) {
+      axios.get("http://localhost:5000/api/auth/me", { withCredentials: true })
+        .then(res => {
+          const name = res.data.user.name || 'User';
+          setUsername(name.split(' ')[0]);
+        })
+        .catch(() => {
+          setIsLoggedIn(false);
+          setUsername('');
+        });
+    }
+  }, [isLoggedIn, setIsLoggedIn]);
 
   const handleLogout = async () => {
     try {
@@ -33,14 +32,6 @@ const MainNav = () => {
     } catch (error) {
       console.error("Logout failed", error);
     }
-  };
-
-  const goToCart = () => {
-    navigate('/cart');
-  };
-
-  const goToProfile = () => {
-    navigate('/profile');
   };
 
   return (
@@ -63,10 +54,8 @@ const MainNav = () => {
           <div className='loginUserInfowithLogout'>
             <div className='loginUserInfo'>
               <FaUser className="user-icon" />
-              <span className='helloUser' onClick={goToProfile}>Hello, {username}</span>
-              <span>
-                <FiShoppingCart className="cart-icon" onClick={goToCart} />
-              </span>
+              <span className='helloUser' onClick={() => navigate('/profile')}>Hello, {username}</span>
+              <FiShoppingCart className="cart-icon" onClick={() => navigate('/cart')} />
             </div>
             <button onClick={handleLogout} className="logout-btn">Logout</button>
           </div>

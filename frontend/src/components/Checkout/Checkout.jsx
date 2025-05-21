@@ -1,98 +1,163 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './checkout.css';
-import TitleSection from '../TitleSection';
-import paypal from '../../assets/paypal.png'
-import cridt from '../../assets/visa.png'
-import cash from '../../assets/cash.png'
+import paypal from '../../assets/paypal.png';
+import cridt from '../../assets/visa.png';
+import cash from '../../assets/cash.png';
+import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
+  const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const orderRes = await axios.get('http://localhost:5000/api/order/latest', {
+          withCredentials: true,
+        });
+        setOrder(orderRes.data.order || orderRes.data); 
+      } catch (err) {
+        console.error(err);
+        if (err.response && err.response.status === 401) {
+          navigate('/login');
+        } else {
+          setError(`Failed to load order: ${err.message}`);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrder();
+  }, [navigate]);
+
+  if (loading) return <p className="loading-text">Loading order...</p>;
+  if (error) return <p className="error-text">{error}</p>;
+  if (!order) return <p className="error-text">No order found.</p>;
+
   const shippingInfo = {
-    name: 'Oday Ahmed',
-    email: 'oday@example.com',
-    phone: '1234567890',
-    address: '123 Main Street, Amman, Jordan',
-    shippingMethod: 'Express',
+    name: order.user?.name || 'N/A',
+    email: order.user?.email || 'N/A',
+    phone: order.user?.phone || 'N/A',
+    shippingMethod: order.shippingMethod,
   };
 
-  const orderItems = [
-    { name: 'iPhone 15', quantity: 1, unitPrice: 699 },
-    { name: 'Samsung Monitor 27"', quantity: 2, unitPrice: 250 },
-  ];
+  const orderItems = Array.isArray(order.items) ? order.items.map(item => ({
+    name: item.product?.name || 'Unknown Product',
+    quantity: item.quantity,
+    unitPrice: item.unitPrice,
+  })) : [];
 
-  const totalAmount = orderItems.reduce(
-    (acc, item) => acc + item.unitPrice * item.quantity,
-    0
-  );
+  const totalAmount = order.totalAmount ?? 0;
+
+const handleConfirmOrder = async () => {
+  try {
+    if (!order || !order._id) {
+      alert('Order not found!');
+      return;
+    }
+
+    const response = await axios.post(
+      `http://localhost:5000/api/order/${order._id}/confirm`,
+      {}, 
+      { withCredentials: true }
+    );
+    alert('✅ Order confirmed!');
+    navigate('/'); 
+  }catch (error) {
+  console.error('Order confirmation error:', error);
+
+  if (error.response) {
+   
+    console.error('Response data:', error.response.data);
+    console.error('Response status:', error.response.status);
+    alert(`❌ Failed to confirm order: ${error.response.data.message || error.message}`);
+  } else {
+     alert(`❌ Failed to confirm order: ${error.message}`);
+  }
+}
+
+};
+
 
   return (
-    <>
-      <TitleSection title="🧾 Checkout Summary" />
-      <div className="container checkout-page py-4 sm-shadow">
+    <div className="container checkout-page py-5">
 
-        {/* Shipping Info */}
-        <div className="mb-4 simple-box">
-          <h5>📦 Shipping</h5>
-          <p><strong>Name:</strong> {shippingInfo.name}</p>
-          <p><strong>Email:</strong> {shippingInfo.email}</p>
-          <p><strong>Phone:</strong> {shippingInfo.phone}</p>
-          <p><strong>Address:</strong> {shippingInfo.address}</p>
-          <p><strong>Method:</strong> {shippingInfo.shippingMethod}</p>
+      <h2 className="page-title mb-4">Order Summary</h2>
+
+      <section className="section-box shipping-section mb-5">
+        <h3>📦 Shipping Information</h3>
+        <div className="info-row"><span>Name:</span> {shippingInfo.name}</div>
+        <div className="info-row"><span>Email:</span> {shippingInfo.email}</div>
+        <div className="info-row"><span>Phone:</span> {shippingInfo.phone}</div>
+        <div className="info-row"><span>Order Date::</span>     {new Date(order.orderDate).toLocaleString()}</div>
+
+   
+
+        {/* <div className="info-row">
+          <span>Method:</span>{' '}
+          {shippingInfo.shippingMethod === 'express'
+            ? 'Express Delivery'
+            : shippingInfo.shippingMethod === 'standard'
+            ? 'Standard Delivery'
+            : 'Unknown'}
+        </div> */}
+      </section>
+
+      <section className="section-box items-section mb-5">
+        <h3>🛍️ Order Items</h3>
+        <table className="table items-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orderItems.map((item, i) => (
+              <tr key={i}>
+                <td>{item.name}</td>
+                <td>{item.quantity}</td>
+                <td>${(item.unitPrice * item.quantity).toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="total-row">
+          <strong>Total:</strong> <span>${totalAmount.toFixed(2)}</span>
         </div>
+      </section>
 
-        {/* Order Items */}
-        <div className="mb-4 simple-box">
-          <h5>🛍️ Order Items</h5>
-          {orderItems.map((item, index) => (
-            <div className="d-flex justify-content-between mb-2" key={index}>
-              <span>{item.name} (x{item.quantity})</span>
-              <span>${(item.unitPrice * item.quantity).toFixed(2)}</span>
-            </div>
-          ))}
-          <hr />
-          <div className="d-flex justify-content-between mt-2">
-            <strong>Total:</strong>
-            <strong>${totalAmount.toFixed(2)}</strong>
-          </div>
-        </div>
+      <section className="section-box payment-section mb-5">
+        <h3>💳 Payment Method</h3>
 
-        {/* Payment Method */}
-<div className="mb-4 simple-box">
-  <h5>💳 Payment Method</h5>
+        <label className="payment-option">
+          <input type="radio" name="paymentMethod" defaultChecked />
+          <img src={cridt} alt="Credit Card" />
+          Credit / Debit Card
+        </label>
 
-  <div className="form-check d-flex align-items-center mb-2">
-    <input className="form-check-input me-2" type="radio" name="paymentMethod" id="creditCard" defaultChecked />
-    <label className="form-check-label d-flex align-items-center" htmlFor="creditCard">
-      <img src={cridt} alt="Credit Card" width="28" className="me-2" />
-      Credit / Debit Card
-    </label>
-  </div>
+        <label className="payment-option">
+          <input type="radio" name="paymentMethod" />
+          <img src={paypal} alt="PayPal" />
+          PayPal
+        </label>
 
-  <div className="form-check d-flex align-items-center mb-2">
-    <input className="form-check-input me-2" type="radio" name="paymentMethod" id="paypal" />
-    <label className="form-check-label d-flex align-items-center" htmlFor="paypal">
-      <img src={paypal} alt="PayPal" width="28" className="me-2" />
-      PayPal
-    </label>
-  </div>
+        <label className="payment-option">
+          <input type="radio" name="paymentMethod" />
+          <img src={cash} alt="Cash on Delivery" />
+          Cash on Delivery
+        </label>
+      </section>
 
-  <div className="form-check d-flex align-items-center">
-    <input className="form-check-input me-2" type="radio" name="paymentMethod" id="cod" />
-    <label className="form-check-label d-flex align-items-center" htmlFor="cod">
-      <img src={cash} alt="Cash on Delivery" width="28" className="me-2" />
-      Cash on Delivery
-    </label>
-  </div>
-</div>
-
-
-        {/* Confirm Button */}
-        <div className="text-end">
-          <button className="btn confirm-btn-simple px-4 py-2">
-            ✅ Confirm Order
-          </button>
-        </div>
+      <div className="text-center">
+        <button className="btn confirm-btn" onClick={handleConfirmOrder}>✅ Confirm Order</button>
       </div>
-    </>
+
+    </div>
   );
 };
 

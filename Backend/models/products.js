@@ -1,17 +1,25 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
 
-const productSchema = new Schema({
+const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  description: { type: String },
   price: { type: Number, required: true },
-  stock: { type: Number, required: true, default: 0 },
-  imageUrl: { type: String },
-  category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
-  brand: { type: String },
-  isFeatured: { type: Boolean, default: false },
-  createdAt: { type: Date, default: Date.now }
+  stock: { type: Number, required: true, min: 0 },
+  description: String,
+  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+  imageUrl: {
+  type: String,
+  required: true,
+  validate: {
+    validator: function (v) {
+      return /\.(jpg|jpeg|png|webp|gif)$/i.test(v);
+    },
+    message: props => `${props.value} is not a valid image file path!`
+  }
+},
+  
+  brand: String,
+  isFeatured: { type: Boolean, default: false }
 });
-const Product = mongoose.model('Product', productSchema);
 
-module.exports = Product;
+
+module.exports = mongoose.model('Product', productSchema);

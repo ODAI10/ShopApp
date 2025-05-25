@@ -8,7 +8,6 @@ const cartItemSchema = new Schema({
   addedAt: { type: Date, default: Date.now }
 });
 
-
 const CartItem = mongoose.model('CartItem', cartItemSchema);
 
 module.exports = CartItem;

@@ -37,8 +37,7 @@ const createOrder = async (req, res) => {
 
     await newOrder.save();
 
-    // 5. حذف السلة
-    await CartItem.deleteMany({ user: userId });
+    // **لا تحذف السلة هنا**
 
     res.status(201).json({ message: "Order created successfully", order: newOrder });
 
@@ -53,7 +52,7 @@ const getOrders = async (req, res) => {
   try {
     const userId = req.user.userId;
 
-     const latestOrder = await Order.findOne({ user: userId, status: { $ne: "confirmed" } })
+    const latestOrder = await Order.findOne({ user: userId, status: { $ne: "confirmed" } })
       .populate("user", "name email phone address")
       .populate("items.product")
       .sort({ createdAt: -1 });
@@ -66,23 +65,47 @@ const getOrders = async (req, res) => {
   }
 };
 
+// Get order by ID
+const getOrderById = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const orderId = req.params.orderId;
+
+    const order = await Order.findOne({ _id: orderId, user: userId })
+      .populate("user", "name email phone address")
+      .populate("items.product");
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.status(200).json({ order });
+
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
 
 const confirmOrder = async (req, res) => {
   try {
     const userId = req.user.userId;
     const orderId = req.params.orderId;
 
-     const order = await Order.findOne({ _id: orderId, user: userId });
+    const order = await Order.findOne({ _id: orderId, user: userId });
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
     }
 
-     order.status = "confirmed";
-     if (req.body.paymentMethod) {
+    order.status = "confirmed";
+    if (req.body.paymentMethod) {
       order.paymentMethod = req.body.paymentMethod;
     }
 
     await order.save();
+
+    // حذف عناصر السلة بعد تأكيد الطلب
+    await CartItem.deleteMany({ user: userId });
 
     res.status(200).json({ message: "Order confirmed successfully", order });
 
@@ -92,5 +115,4 @@ const confirmOrder = async (req, res) => {
   }
 };
 
-
-module.exports = { createOrder, getOrders,confirmOrder };
+module.exports = { createOrder, getOrders, getOrderById, confirmOrder };

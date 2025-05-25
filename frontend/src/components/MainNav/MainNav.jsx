@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {Link , NavLink, useNavigate } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
 import { FiShoppingCart } from "react-icons/fi";
 import axios from "axios";
 import './MainNav.css';
-import logo from '../assets/logo4.png';
+import logo from '../../assets/logo4.png';
 
 const MainNav = ({ isLoggedIn, setIsLoggedIn }) => {
   const [username, setUsername] = useState('');
@@ -42,11 +42,10 @@ const MainNav = ({ isLoggedIn, setIsLoggedIn }) => {
       </Link>
 
       <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/products">Products</Link></li>
-        <li><Link to="/wishlist">Wishlist</Link></li>
-        <li><Link to="/about">About Us</Link></li>
-        <li><Link to="/contact">Contact Us</Link></li>
+        <li><NavLink  to="/">Home</NavLink></li>
+        <li><NavLink  to="/products">Products</NavLink></li>
+        <li><NavLink  to="/about">About Us</NavLink></li>
+        <li><NavLink  to="/contact">Contact Us</NavLink></li>
       </ul>
 
       <div className="user-info">
@@ -54,7 +53,7 @@ const MainNav = ({ isLoggedIn, setIsLoggedIn }) => {
           <div className='loginUserInfowithLogout'>
             <div className='loginUserInfo'>
               <FaUser className="user-icon" />
-              <span className='helloUser' onClick={() => navigate('/profile')}>Hello, {username}</span>
+              <span className='helloUser' onClick={() => navigate('#')}>Hello, {username}</span>
               <FiShoppingCart className="cart-icon" onClick={() => navigate('/cart')} />
             </div>
             <button onClick={handleLogout} className="logout-btn">Logout</button>

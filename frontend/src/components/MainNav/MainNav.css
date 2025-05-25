@@ -70,6 +70,12 @@
   transform-origin: left;
 }
 
+.nav-links li a.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
 /* User Info */
 .user-info {
   display: flex;

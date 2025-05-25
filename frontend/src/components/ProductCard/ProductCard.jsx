@@ -3,7 +3,7 @@ import axios from 'axios';
 import './ProductCard.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import '../App.css'
+import '../../App.css'
 const ProductCard = ({
   product,
   showDescription=true,
@@ -62,9 +62,13 @@ const ProductCard = ({
       </div>
       <div className="product-content">
         <h3 className="product-name">{product.name}</h3>
-           {showDescription && product.description && (
-              <p className="product-description">{product.description}</p>
-            )}
+          {showDescription && product.description && (
+  <p className="product-description">
+    {product.description.length > 50
+      ? product.description.slice(0, 50) + '...'
+      : product.description}
+  </p>
+)}
 
         <p className="product-price">${product.price}</p>
         <p className="product-brand">Brand: {product.brand}</p>

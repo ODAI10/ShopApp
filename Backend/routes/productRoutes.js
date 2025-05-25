@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../middleware/upload');
-
+const {validateProduct} = require("../validators/userValidator")
 
 const {
   createProduct,
@@ -26,7 +26,7 @@ router.post('/upload', upload, (req, res) => {
 });
 
 
-router.post('/', createProduct);
+router.post('/', createProduct,validateProduct);
 router.get('/', getAllProducts);
 router.get('/:id', getProductById);
 router.put('/:id', updateProduct);

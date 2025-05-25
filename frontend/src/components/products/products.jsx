@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import TitleSection from '../TitleSection';
-import ProductCard from '../ProductCard';
+import TitleSection from '../../components/TitleSection/TitleSection';
+import ProductCard from '../ProductCard/ProductCard';
 import './products.css';
 import CategoriesBar from '../CategoriesBar/CategoriesBar';
 import '../../App.css'
@@ -44,7 +44,7 @@ const Products = () => {
   };
 
   return (
-    <div className="productsPage ">
+    <div className="productsPage py-5">
       <TitleSection title={'All Products'} />
       <CategoriesBar 
         categories={categories} 

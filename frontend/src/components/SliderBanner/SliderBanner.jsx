@@ -3,9 +3,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./SliderBanner.css";
 
-import banner2 from "../assets/baner4.png";
-import banner1 from "../assets/baner13.png";
-import banner3 from "../assets/baner14.png";
+import banner2 from "../../assets/baner4.png";
+import banner1 from "../../assets/baner13.png";
+import banner3 from "../../assets/baner14.png";
 
 const images = [
   { url: banner1,  },
@@ -25,7 +25,7 @@ const SliderBanner = () => {
   };
 
   return (
-    <div className="slider-container my-3">
+    <div className="slider-container ">
       <Slider {...settings}>
         {images.map((img, index) => (
           <div key={index}>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import './home.css';
-import SliderBanner from '../SliderBanner';
-import ProductCard from '../ProductCard';
-import TitleSection from '../TitleSection';
+import SliderBanner from '../../components/SliderBanner/SliderBanner';
+import ProductCard from '../ProductCard/ProductCard';
+import TitleSection from '../../components/TitleSection/TitleSection';
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -25,18 +25,21 @@ const Home = () => {
   }, []);
 
    const categoryMap = {};
-  products.forEach((product) => {
+ products.forEach((product) => {
+  if (product.category && product.category.name) {
     if (!categoryMap[product.category.name]) {
       categoryMap[product.category.name] = product;
     }
-  });
+  }
+});
+
 
    const uniqueCategoryProducts = Object.values(categoryMap);
 
    const firstFourProducts = uniqueCategoryProducts.slice(0, 4);
 
   return (
-    <div className="home-container">
+    <div className="home-container  py-5">
       <SliderBanner />
 
       <TitleSection title={'products'} />

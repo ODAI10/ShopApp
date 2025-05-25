@@ -4,21 +4,23 @@ import './checkout.css';
 import paypal from '../../assets/paypal.png';
 import cridt from '../../assets/visa.png';
 import cash from '../../assets/cash.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Checkout = () => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { orderId } = useParams();  // جلب orderId من رابط الصفحة
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const orderRes = await axios.get('http://localhost:5000/api/order/latest', {
+        // نستخدم orderId من الرابط لجلب طلب معين
+        const orderRes = await axios.get(`http://localhost:5000/api/order/${orderId}`, {
           withCredentials: true,
         });
-        setOrder(orderRes.data.order || orderRes.data); 
+        setOrder(orderRes.data.order || orderRes.data);
       } catch (err) {
         console.error(err);
         if (err.response && err.response.status === 401) {
@@ -30,8 +32,9 @@ const Checkout = () => {
         setLoading(false);
       }
     };
+
     fetchOrder();
-  }, [navigate]);
+  }, [orderId, navigate]);
 
   if (loading) return <p className="loading-text">Loading order...</p>;
   if (error) return <p className="error-text">{error}</p>;
@@ -52,39 +55,35 @@ const Checkout = () => {
 
   const totalAmount = order.totalAmount ?? 0;
 
-const handleConfirmOrder = async () => {
-  try {
-    if (!order || !order._id) {
-      alert('Order not found!');
-      return;
+  const handleConfirmOrder = async () => {
+    try {
+      if (!order || !order._id) {
+        alert('Order not found!');
+        return;
+      }
+
+      const response = await axios.post(
+        `http://localhost:5000/api/order/${order._id}/confirm`,
+        {},
+        { withCredentials: true }
+      );
+      alert('✅ Order confirmed!');
+      navigate('/');
+    } catch (error) {
+      console.error('Order confirmation error:', error);
+
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        alert(`❌ Failed to confirm order: ${error.response.data.message || error.message}`);
+      } else {
+        alert(`❌ Failed to confirm order: ${error.message}`);
+      }
     }
-
-    const response = await axios.post(
-      `http://localhost:5000/api/order/${order._id}/confirm`,
-      {}, 
-      { withCredentials: true }
-    );
-    alert('✅ Order confirmed!');
-    navigate('/'); 
-  }catch (error) {
-  console.error('Order confirmation error:', error);
-
-  if (error.response) {
-   
-    console.error('Response data:', error.response.data);
-    console.error('Response status:', error.response.status);
-    alert(`❌ Failed to confirm order: ${error.response.data.message || error.message}`);
-  } else {
-     alert(`❌ Failed to confirm order: ${error.message}`);
-  }
-}
-
-};
-
+  };
 
   return (
     <div className="container checkout-page py-5">
-
       <h2 className="page-title mb-4">Order Summary</h2>
 
       <section className="section-box shipping-section mb-5">
@@ -92,18 +91,7 @@ const handleConfirmOrder = async () => {
         <div className="info-row"><span>Name:</span> {shippingInfo.name}</div>
         <div className="info-row"><span>Email:</span> {shippingInfo.email}</div>
         <div className="info-row"><span>Phone:</span> {shippingInfo.phone}</div>
-        <div className="info-row"><span>Order Date::</span>     {new Date(order.orderDate).toLocaleString()}</div>
-
-   
-
-        {/* <div className="info-row">
-          <span>Method:</span>{' '}
-          {shippingInfo.shippingMethod === 'express'
-            ? 'Express Delivery'
-            : shippingInfo.shippingMethod === 'standard'
-            ? 'Standard Delivery'
-            : 'Unknown'}
-        </div> */}
+        <div className="info-row"><span>Order Date::</span> {new Date(order.orderDate).toLocaleString()}</div>
       </section>
 
       <section className="section-box items-section mb-5">
@@ -156,7 +144,6 @@ const handleConfirmOrder = async () => {
       <div className="text-center">
         <button className="btn confirm-btn" onClick={handleConfirmOrder}>✅ Confirm Order</button>
       </div>
-
     </div>
   );
 };

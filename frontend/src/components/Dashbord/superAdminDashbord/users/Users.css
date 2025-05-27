@@ -1,0 +1,163 @@
+:root {
+  --radius: 12px;
+  --shadow: 0 6px 10px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 8px 16px rgba(0, 0, 0, 0.08);
+  --font-size: 0.95rem;
+  --color-dark: #343a40;
+  --color-primary: #007bff;
+  --color-primary-dark: #0056b3;
+  --transition: all 0.2s ease-in-out;
+}
+
+.users-main {
+  padding: 40px 0;
+  background: linear-gradient(to right, #f0f2f5, #e4e6eb);
+  min-height: 100vh;
+}
+
+.users-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+
+/* جدول أنيق وحديث */
+.table {
+  border-collapse: separate;
+  border-spacing: 0 12px;
+}
+
+.table thead th {
+  background-color: var(--color-dark);
+  color: white;
+  font-weight: 600;
+  font-size: var(--font-size);
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px 12px;
+  transition: var(--transition);
+}
+
+.table thead th:hover {
+  background-color: #2c2f33;
+}
+
+.table tbody tr {
+  background-color: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.table tbody tr:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.table td {
+  vertical-align: middle;
+  padding: 14px 16px;
+  border: none;
+  font-size: var(--font-size);
+  color: #333;
+}
+
+.table td:first-child {
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+}
+
+.table td:last-child {
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+/* الأزرار */
+.btn-outline-success,
+.btn-outline-danger {
+  border-radius: 6px;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.btn-outline-success:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* الزر الرئيسي */
+.btn-primary {
+  background-color: var(--color-primary);
+  border: none;
+  padding: 10px 20px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  color: white;
+}
+
+/* نموذج المودال */
+.modal-content {
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  background-color: #f8f9fa;
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+}
+
+.modal-title {
+  font-weight: 600;
+}
+
+.modal-footer {
+  background-color: #f8f9fa;
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+}
+
+/* حقول النموذج */
+.form-control {
+  border-radius: 8px;
+  font-size: var(--font-size);
+  padding: 10px 12px;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  outline: 2px solid var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+select.form-control {
+  appearance: auto;
+}
+
+/* تحسين التجاوب */
+@media (max-width: 768px) {
+  .table td {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

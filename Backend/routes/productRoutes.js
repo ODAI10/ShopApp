@@ -1,8 +1,9 @@
-
 const express = require('express');
 const router = express.Router();
 const upload = require('../middleware/upload');
-const {validateProduct} = require("../validators/userValidator")
+const { validateProduct } = require("../validators/userValidator");
+const authMiddleware = require('../middleware/authMiddleware');
+const checkRole = require('../middleware/authorizeRoles');
 
 const {
   createProduct,
@@ -10,9 +11,10 @@ const {
   getProductById,
   updateProduct,
   deleteProduct
-} = require("../controllers/productController")
+} = require("../controllers/productController");
 
-router.post('/upload', upload, (req, res) => {
+// حماية رفع الصور - فقط للأدمن والمشرفين
+router.post('/upload', authMiddleware, checkRole('admin', 'superadmin'), upload, (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
@@ -25,13 +27,19 @@ router.post('/upload', upload, (req, res) => {
   }
 });
 
+// إضافة منتج - فقط الأدمن والمشرفين
+router.post('/', authMiddleware, checkRole('admin', 'superadmin'), validateProduct, createProduct);
 
-router.post('/', createProduct,validateProduct);
+// جلب كل المنتجات - متاح للجميع
 router.get('/', getAllProducts);
+
+// جلب منتج حسب الـ ID - متاح للجميع
 router.get('/:id', getProductById);
-router.put('/:id', updateProduct);
-router.delete('/:id', deleteProduct);
 
+// تحديث منتج - فقط الأدمن والمشرفين
+router.put('/:id', authMiddleware, checkRole('admin', 'superadmin'), updateProduct);
 
+// حذف منتج - فقط الأدمن والمشرفين
+router.delete('/:id', authMiddleware, checkRole('admin', 'superadmin'), deleteProduct);
 
 module.exports = router;

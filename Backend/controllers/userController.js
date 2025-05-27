@@ -30,7 +30,7 @@ const register = async (req, res) => {
     await user.save();
 
     // Generate token
-    const token = jwt.sign({ userId: user._id,isAdmin: false }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id,role: user.role }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
 
@@ -41,7 +41,7 @@ const register = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
     .status(201).json({ message: "Registered successfully", user: {
-       id: user._id, name: user.name, email: user.email 
+       id: user._id, name: user.name, email: user.email ,  role: user.role
       },
      });
   } catch (error) {
@@ -76,38 +76,70 @@ const getProfile   = async (req,res)=>{
 }
 
 // Update profile user
-const updateProfile  = async (req,res)=>{
- try {
-   const {name,phone} = req.body; 
-   const existingPhone = await User.findOne({ phone });
-    if (existingPhone && existingPhone._id.toString() !== req.user.userId) {
+const updateProfile = async (req, res) => {
+  try {
+    const { name, phone, password } = req.body;
+    const userIdToUpdate = req.params.userId;
+
+    // تحقق من صلاحيات المستخدم
+    if (req.user.role !== "superadmin" && userIdToUpdate !== req.user.userId) {
+      return res.status(403).json({ message: "Not allowed to edit other users" });
+    }
+
+    // تحقق من رقم الهاتف
+    const existingPhone = await User.findOne({ phone });
+    if (existingPhone && existingPhone._id.toString() !== userIdToUpdate) {
       return res.status(400).json({ message: "Phone number already in use" });
     }
-  
-  const updated  = await User.findByIdAndUpdate(
-     req.user.userId ,
-     { name, phone },
-     { new: true }
-  )
-  .select("-password");
-  res.status(200).json(updated);
- } catch (error) {
-     res.status(500).json({ message: "Server error" });
 
- }
-}
+    const updateData = { name, phone };
+
+    // إذا تم إرسال كلمة مرور جديدة، نعمل لها هاش
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updateData.password = hashedPassword;
+    }
+
+    // تحديث البيانات
+    const updated = await User.findByIdAndUpdate(
+      userIdToUpdate,
+      updateData,
+      { new: true }
+    ).select("-password");
+
+    res.status(200).json(updated);
+
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 // Delete profile
-const deleteProfile = async (req,res)=>{
+const deleteProfile = async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.user.userId);
-    res.clearCookie("token");
+    const userIdToDelete = req.params.userId || req.user.userId;
+
+    // فقط السوبرأدمن يستطيع حذف غيره
+    if (userIdToDelete !== req.user.userId && req.user.role !== "superadmin") {
+      return res.status(403).json({ message: "Not allowed to delete this user" });
+    }
+
+    await User.findByIdAndDelete(userIdToDelete);
+
+    // إذا كان يحذف نفسه، نحذف التوكن
+    if (userIdToDelete === req.user.userId) {
+      res.clearCookie("token");
+    }
+
     res.status(200).json({ message: "Account deleted" });
+
   } catch (error) {
-     res.status(500).json({ message: "Server error" });
-  
+    console.error("Error deleting user:", error);
+    res.status(500).json({ message: "Server error" });
   }
-}
+};
+
 
 
 

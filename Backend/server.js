@@ -21,6 +21,7 @@ const authRoutes = require('./routes/authRoutes')
 const cartRoutes = require('./routes/cartRoutes');
 const orderRoutes = require("./routes/ordersRoutes")
 const commentRoutes = require("./routes/commentsRoutes")
+const adminRoutes = require("./routes/adminRoutes")
 
 app.use("/api/categories", categoryRoutes);
 app.use('/api/products', productRoutes);
@@ -30,6 +31,7 @@ app.use('/api/auth',authRoutes)
 app.use("/api/cart",cartRoutes)
 app.use("/api/order",orderRoutes);
 app.use("/api/comments",commentRoutes)
+app.use("/api/admins",adminRoutes)
 // Connect DB
 const connectDB = require('./config/db');
 connectDB(); 

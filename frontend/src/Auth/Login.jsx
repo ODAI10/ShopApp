@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = ({ setIsLoggedIn, setRole }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,17 +14,19 @@ const Login = ({ setIsLoggedIn }) => {
     setError("");
 
     try {
-      await axios.post("http://localhost:5000/api/auth/login", {
-        email,
-        password,
-      }, { withCredentials: true });
-
-      setIsLoggedIn(true); // تحديث حالة الدخول
-      navigate("/");
-    } catch (err) {
-      setError(
-        err.response?.data?.message || "Login failed. Please try again."
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        { email, password },
+        { withCredentials: true }
       );
+
+      setIsLoggedIn(true);
+      setRole(res.data.user.role);  // تحديث الدور بعد تسجيل الدخول
+
+      const redirectTo = res.data.redirectTo || "/";
+      navigate(redirectTo);
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed. Please try again.");
     }
   };
 

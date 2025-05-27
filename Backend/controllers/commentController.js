@@ -28,8 +28,7 @@ const createComment  = async (req,res)=>{
             commentText
         })
         const saved = await newComment.save()
-                console.log(req.body);
-                console.log(req.user);
+             
         res.status(201).json(saved);
 
     } catch (error) {
@@ -50,11 +49,7 @@ const deletComment = async (req,res) => {
       return res.status(404).json({ message: 'Comment not found' });
     }
 
-    console.log('UserId from token:', userId);
-    console.log('Comment user id:', comment.user.toString());
 
-    console.log('UserId from token:', userId);
-console.log('Comment user _id:', comment.user._id.toString());
 
    if (comment.user._id.toString() !== userId) {
   return res.status(403).json({ message: 'You are not authorized to delete this comment' });

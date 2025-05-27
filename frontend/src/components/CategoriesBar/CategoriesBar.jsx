@@ -8,7 +8,7 @@ const CategoriesBar = ({ categories, onCategorySelect, activeCategory }) => {
       <div 
         key="all-products" 
         className={`category ${activeCategory === null ? 'active' : ''}`}
-        onClick={() => onCategorySelect(null)}  // عند النقر على All Products يتم تحديد null
+        onClick={() => onCategorySelect(null)}  
       >
         <div>All Products</div>
       </div>
@@ -18,7 +18,7 @@ const CategoriesBar = ({ categories, onCategorySelect, activeCategory }) => {
         <div 
           key={category._id} 
           className={`category ${activeCategory && activeCategory._id === category._id ? 'active' : ''}`}
-          onClick={() => onCategorySelect(category)}  // عند النقر على فئة يتم تحديدها
+          onClick={() => onCategorySelect(category)} 
         >
           <div>{category.name}</div>
         </div>

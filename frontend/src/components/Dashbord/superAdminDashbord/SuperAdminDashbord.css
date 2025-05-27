@@ -1,0 +1,46 @@
+/* SuperAdminDashboard.css */
+
+.superadmin-container {
+  min-height: 100vh;
+  display: flex;
+}
+
+.superadmin-sidebar {
+  width: 250px;
+  background-color: #1e293b !important;
+  color: white;
+  padding: 1rem;
+}
+
+.superadmin-sidebar h4 {
+  margin-bottom: 1.5rem;
+}
+
+.superadmin-sidebar .nav-link {
+  color: white;
+}
+
+.superadmin-sidebar .nav-link.text-danger {
+  color: #dc3545 !important;
+}
+
+.superadmin-main {
+  flex-grow: 1;
+  background-color: #f8f9fa;
+}
+
+.superadmin-navbar {
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.superadmin-content {
+  padding: 2rem;
+}
+
+.superadmin-card {
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  margin-bottom: 1.5rem;
+}

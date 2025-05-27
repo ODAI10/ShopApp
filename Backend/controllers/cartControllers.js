@@ -6,10 +6,8 @@ const Product = require('../models/products');
 const addToCart = async (req, res) => {
   try {
     const userId = req.user.userId; 
-    console.log(userId)
     const { product, quantity } = req.body;
-    console.log(quantity)
-    console.log(product)
+ 
     if (!product || !quantity) {
       return res.status(400).json({ message: 'Product and quantity are required' });
     }

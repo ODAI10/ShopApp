@@ -1,0 +1,41 @@
+/* Admins.css */
+
+.superadmin-main {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.superadmin-content {
+  padding: 1rem 2rem;
+}
+
+.superadmin-card {
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  border-radius: 0.5rem;
+}
+
+.modal {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  border-radius: 0.5rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.btn-close:hover {
+  opacity: 1;
+}

@@ -31,7 +31,7 @@ const login = async (req, res) => {
         .json({
           message: "Admin login successful",
           role: admin.role,
-        redirectTo: admin.role === "superadmin" ? "/dashboard/superadmin/information" : "/dashboard/admins",
+        redirectTo: admin.role === "superadmin" ? "/dashboard/superadmin/information" : "/dashboard/admins/information",
           user: {
             id: admin._id,
             name: admin.name,
@@ -111,4 +111,4 @@ const getMe = async (req, res) => {
 };
 
 
-module.exports = {login,logOut,getMe};
+module.exports = {login,logOut,getMe}; 

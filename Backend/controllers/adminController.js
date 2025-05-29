@@ -58,7 +58,7 @@ const getAllSuperAdmins = async (req, res) => {
 
 const getAllAdminsWithProducts = async (req, res) => {
   try {
-    const admin = await Admin.find({ role: "admin" }).select("-password");
+    const admin = await Admin.find({ role: "admins" }).select("-password");
 
     const adminsWithProducts = await Promise.all(
       admin.map(async (admin) => {

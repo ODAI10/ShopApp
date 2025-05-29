@@ -36,24 +36,30 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-// Update product by id
-exports.updateProduct = async (req,res)=>{
-    try {
-        const updatedProduct = await Product.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-         { new: true }
-    )
-     if (!updatedProduct) {
-      return res.status(404).json({ error: 'Product not found' });
-    }
-        res.json(updatedProduct);
-    } catch (error) {
-         res.status(400).json({ error: error.message });
-
+// PATCH /api/products/:id
+exports.updateProduct = async (req, res) => {
+  try {
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ message: "No data provided for update" });
     }
 
-}
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(updatedProduct);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Something went wrong", error: error.message });
+  }
+};
+
 
 // Delete product by id
 exports.deleteProduct = async( req,res)=>{
@@ -61,6 +67,8 @@ exports.deleteProduct = async( req,res)=>{
         await Product.findByIdAndDelete(req.params.id)
         res.json({ message: 'Product deleted' });
     } catch (error) {
+          console.error(error);
+
        res.status(400).json({ error: error.message });
     }
 }

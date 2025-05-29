@@ -37,10 +37,6 @@ const MainNav = ({ isLoggedIn, setIsLoggedIn, role, setRole }) => {
     }
   };
 
-  // إذا كان المستخدم أدمن أو سوبر أدمن، لا تظهر MainNav
-  if (role === 'admins' || role === 'superadmin') {
-    return null;
-  }
 
   return (
     <nav className="main-nav">
@@ -50,14 +46,14 @@ const MainNav = ({ isLoggedIn, setIsLoggedIn, role, setRole }) => {
       </Link>
 
       <ul className="nav-links">
-        {(!role || role === 'user') && (
+     
           <>
             <li><NavLink to="/">Home</NavLink></li>
             <li><NavLink to="/products">Products</NavLink></li>
             <li><NavLink to="/about">About Us</NavLink></li>
             <li><NavLink to="/contact">Contact Us</NavLink></li>
           </>
-        )}
+    
       </ul>
 
       <div className="user-info">

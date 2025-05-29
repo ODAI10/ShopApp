@@ -1,0 +1,65 @@
+.chat-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  z-index: 999;
+}
+
+.chat-header {
+  background-color: #1e293b;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-controls button {
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 18px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.chat-body {
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+
+
+.chat-message {
+  display: flex;
+  justify-content: flex-start; /* الاسم والرسالة بجانب بعض */
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 10px; /* مسافة بين الاسم والرسالة */
+}
+
+.message-sender {
+  font-weight: 600;
+  color: #2c3e50; /* لون اسم المستخدم */
+  min-width: 60px; /* مساحة ثابتة للاسم */
+  white-space: nowrap; /* الاسم لا يكسر */
+  font-size: 11px;
+}
+
+.message-text {
+  background-color: #f1f0f0;
+  padding: 6px 12px;
+  border-radius: 15px;
+  max-width: 70%;
+  word-wrap: break-word;
+  color: #34495e;
+  font-size: 12px;
+}
+

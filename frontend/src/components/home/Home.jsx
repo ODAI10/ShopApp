@@ -13,12 +13,12 @@ const Home = () => {
   const latestFourProducts = latestProducts.slice(0, 4);
 
   useEffect(() => {
-     fetch('http://localhost:5000/api/categories')
+     fetch('http://localhost:5000/api/categories/user')
       .then((response) => response.json())
       .then((data) => setCategories(data))
       .catch((error) => console.error('Error fetching categories:', error));
 
-     fetch('http://localhost:5000/api/products')
+     fetch('http://localhost:5000/api/products/users')
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error('Error fetching products:', error));

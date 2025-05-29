@@ -14,7 +14,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/products');
+        const res = await axios.get('http://localhost:5000/api/products/users');
         setProducts(res.data);
       } catch (err) {
         console.error('Error fetching products:', err);
@@ -23,7 +23,7 @@ const Products = () => {
 
     const fetchCategories = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/categories');
+const res = await axios.get('http://localhost:5000/api/categories/user');
         setCategories(res.data);
       } catch (err) {
         console.error('Error fetching categories:', err);

@@ -37,6 +37,7 @@ const SuperAdminDashboard = () => {
           <li className="nav-item mb-2">
             <NavLink className="nav-link" to="/dashboard/superadmin/categories">Categories</NavLink>
           </li>
+           
           <li className="nav-item">
             <button className="nav-link text-danger btn btn-link" onClick={handleLogout}>
               Logout

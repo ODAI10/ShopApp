@@ -30,9 +30,11 @@ const Cart = ({ onRemove, onCheckout }) => {
     fetchCartItems();
   }, []);
 
-  const totalPrice = cartItems.reduce((acc, item) => {
-    return acc + item.product.price * item.quantity;
-  }, 0);
+const totalPrice = cartItems.reduce((acc, item) => {
+  if (!item.product || typeof item.product.price !== 'number') return acc;
+  return acc + item.product.price * item.quantity;
+}, 0);
+
 
   const handleRemoveFromCart = async (cartItemId) => {
     try {

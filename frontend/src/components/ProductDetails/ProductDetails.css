@@ -5,8 +5,8 @@
               4px 0 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background-color: #fff;
-  width: 80%;
-  margin: 25px auto;
+  width: 75%;
+  margin: 25px auto !important;
 }
 
 .product-title {
@@ -15,7 +15,7 @@
   text-align: center;
 }
 
-.product-description {
+.product-description-detiles {
   font-size: 1rem;
   color: #666;
   line-height: 1.6;
@@ -87,8 +87,9 @@
 
 /* ✅ التعليقات */
 .comment-section {
-  width: 80%;
-  margin: 2rem auto;
+  width: 75%;
+  margin: 2rem auto !important;
+  text-align: start;
 }
 
 .comment {
@@ -120,7 +121,7 @@
 .CommentsTiltel{
   width: 80%;
   margin:25px auto;
- 
+  
 }
 
 /*  ADD COMMENT */

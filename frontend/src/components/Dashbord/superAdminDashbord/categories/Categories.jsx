@@ -14,9 +14,13 @@ const Categories = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/categories');
+        const res = await axios.get('http://localhost:5000/api/categories', {
+      withCredentials: true, 
+    });
       setCategories(res.data);
     } catch (error) {
+      console.log(error.response?.data || error.message);
+
       console.error('Error fetching categories:', error);
     }
   };
@@ -29,11 +33,17 @@ const Categories = () => {
     e.preventDefault();
     if (!formData.name.trim()) return alert('Name is required');
     try {
-      if (editingId) {
-        await axios.put(`http://localhost:5000/api/categories/${editingId}`, formData);
-      } else {
-        await axios.post('http://localhost:5000/api/categories', formData);
-      }
+    if (editingId) {
+  await axios.put(
+    `http://localhost:5000/api/categories/${editingId}`,
+    formData,
+    { withCredentials: true }
+  );
+}
+ else {
+ await axios.post('http://localhost:5000/api/categories', formData, {
+    withCredentials: true
+  });      }
       setFormData({ name: '', icon: '' });
       setEditingId(null);
       setShowForm(false);
@@ -52,8 +62,9 @@ const Categories = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Delete this category?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/categories/${id}`);
-        fetchCategories();
+    await axios.delete(`http://localhost:5000/api/categories/${id}`, {
+      withCredentials: true
+    });        fetchCategories();
       } catch (err) {
         console.error('Delete error:', err);
       }

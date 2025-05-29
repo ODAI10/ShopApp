@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "./AuthContext"; 
 import "./Auth.css";
 
-const Login = ({ setIsLoggedIn, setRole }) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  // استدعاء من الـ Context
+  const { setIsLoggedIn, setRole } = useContext(AuthContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,11 +25,15 @@ const Login = ({ setIsLoggedIn, setRole }) => {
       );
 
       setIsLoggedIn(true);
-      setRole(res.data.user.role);  // تحديث الدور بعد تسجيل الدخول
+      setRole(res.data.role);
+window.dispatchEvent(new Event('login'));
 
       const redirectTo = res.data.redirectTo || "/";
       navigate(redirectTo);
+          window.location.reload();
+
     } catch (err) {
+      console.error("Login error:", err.response?.data || err.message);
       setError(err.response?.data?.message || "Login failed. Please try again.");
     }
   };

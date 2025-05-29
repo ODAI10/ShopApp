@@ -8,6 +8,6 @@ const SuperAdminLayout = () => (
       <Outlet />
     </div>
   </div>
-);
+); 
 
 export default SuperAdminLayout;

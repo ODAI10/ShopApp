@@ -139,7 +139,7 @@ const ProductDetails = () => {
         {/* تفاصيل المنتج */}
         <div className="col-md-6 product_info">
           <h2 className="product-title mb-3">{product.name}</h2>
-          <p className="product-description text-muted mb-3">{product.description}</p>
+          <p className="product-description-detiles text-muted mb-3">{product.description}</p>
 
           <div className="product-details-grid">
             <div className="detail-box">

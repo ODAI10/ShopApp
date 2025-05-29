@@ -14,7 +14,7 @@ const {
 } = require("../controllers/productController");
 
 // حماية رفع الصور - فقط للأدمن والمشرفين
-router.post('/upload', authMiddleware, checkRole('admin', 'superadmin'), upload, (req, res) => {
+router.post('/upload', authMiddleware, checkRole('admins', 'superadmin'), upload, (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
@@ -28,18 +28,21 @@ router.post('/upload', authMiddleware, checkRole('admin', 'superadmin'), upload,
 });
 
 // إضافة منتج - فقط الأدمن والمشرفين
-router.post('/', authMiddleware, checkRole('admin', 'superadmin'), validateProduct, createProduct);
+router.post('/', authMiddleware, checkRole('admins', 'superadmin'), validateProduct, createProduct);
 
 // جلب كل المنتجات - متاح للجميع
-router.get('/', getAllProducts);
+router.get('/users', getAllProducts);
 
 // جلب منتج حسب الـ ID - متاح للجميع
 router.get('/:id', getProductById);
 
 // تحديث منتج - فقط الأدمن والمشرفين
-router.put('/:id', authMiddleware, checkRole('admin', 'superadmin'), updateProduct);
-
+router.patch('/:id', authMiddleware, checkRole('admins', 'superadmin'), updateProduct);
+ 
 // حذف منتج - فقط الأدمن والمشرفين
-router.delete('/:id', authMiddleware, checkRole('admin', 'superadmin'), deleteProduct);
+router.delete('/:id', authMiddleware, checkRole('admins', 'superadmin'), deleteProduct);
+
+
+router.get('/', authMiddleware, checkRole('admins', 'superadmin'),getAllProducts);
 
 module.exports = router;

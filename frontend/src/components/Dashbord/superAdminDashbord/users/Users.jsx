@@ -41,12 +41,12 @@ const Users = () => {
           dataToSend,
           { withCredentials: true }
         );
-      } else {
-        await axios.post(
-          'http://localhost:5000/api/users/register',
-          dataToSend,
-          { withCredentials: true }
-        );
+      // } else {
+      //   await axios.post(
+      //     'http://localhost:5000/api/users/register',
+      //     dataToSend,
+      //     { withCredentials: true }
+      //   );
       }
 
       setShowForm(false);
@@ -93,7 +93,7 @@ const Users = () => {
       <div className="users-content container">
         <h2 className="mb-4">Users Management</h2>
 
-        <button
+        {/* <button
           className="btn btn-primary mb-4"
           onClick={() => {
             setShowForm(true);
@@ -102,7 +102,7 @@ const Users = () => {
           }}
         >
           Add New User
-        </button>
+        </button> */}
 
         <div className="table-responsive">
           <table className="table table-striped table-hover align-middle">
@@ -222,7 +222,7 @@ const Users = () => {
                         required
                       >
                         <option value="user">User</option>
-                        <option value="admin">Admin</option>
+                        <option value="admins">Admin</option>
                         <option value="superadmin">Super Admin</option>
                       </select>
                     </div>

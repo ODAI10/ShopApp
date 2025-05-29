@@ -28,7 +28,7 @@ router.post("/init", validateRegister, createSuperAdmin);
 router.get("/admin-with-products", authenticate, authorizeRoles("superadmin"), getAllAdminsWithProducts);
 
 // Get all admins 
-router.get("/admins", authenticate, authorizeRoles("superadmin"), getAllAdmin);
+router.get("/admins", authenticate, authorizeRoles("superadmin","admins"), getAllAdmin);
 
 // Get all superadmins
 router.get("/superadmins", authenticate, getAllSuperAdmins);
